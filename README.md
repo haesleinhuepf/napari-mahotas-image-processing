@@ -18,35 +18,35 @@ Image processing based using the [Mahotas library](https://github.com/luispedro/
 Applies a [Gaussian blur](https://mahotas.readthedocs.io/en/latest/api.html#mahotas.gaussian_filter) to an
 image. This might be useful for denoising, e.g. before applying the Threshold-Otsu method.
 
-![img.png](docs/gaussian_blur.png)
+![img.png](https://github.com/haesleinhuepf/napari-mahotas-image-processing/raw/main/docs/gaussian_blur.png)
 
 ### Otsu's threshold
 
 Binarizes an image using [scikit-image's threshold Otsu algorithm](https://mahotas.readthedocs.io/en/latest/api.html#mahotas.otsu), also known as 
 [Otsu's method](https://ieeexplore.ieee.org/document/4310076).
 
-![img.png](docs/threshold_otsu.png)
+![img.png](https://github.com/haesleinhuepf/napari-mahotas-image-processing/raw/main/docs/threshold_otsu.png)
 
 ### Split connected objects
 
 In case objects stick together after thresholding, this tool might help.
 It aims to deliver similar results as [ImageJ's watershed implementation](https://imagej.nih.gov/ij/docs/menus/process.html#watershed).
 
-![img.png](docs/split_touching_objects.png)
+![img.png](https://github.com/haesleinhuepf/napari-mahotas-image-processing/raw/main/docs/split_touching_objects.png)
 
 ### Connected component labeling
 
 Takes a binary image and produces a label image with all separated objects labeled differently. Under the hood, it uses
 [mahotas' label function](https://mahotas.readthedocs.io/en/latest/api.html#mahotas.label).
 
-![img.png](docs/connected_component_labeling.png)
+![img.png](https://github.com/haesleinhuepf/napari-mahotas-image-processing/raw/main/docs/connected_component_labeling.png)
 
 ### Seeded watershed
 
 Starting from an image showing high-intensity membranes and a seed-image where objects have been labeled,
 objects are labeled that are constrained by the membranes. Hint: you may want to blur the membrane channel a bit in advance.
 
-![img.png](docs/seeded_watershed.png)
+![img.png](https://github.com/haesleinhuepf/napari-mahotas-image-processing/raw/main/docs/seeded_watershed.png)
 
 
 ----------------------------------
