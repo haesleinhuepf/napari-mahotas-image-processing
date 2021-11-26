@@ -1,4 +1,4 @@
-# napari-mahotas-image-processing
+# napari-mahotas-image-processing (n-mahotas)
 
 [![License](https://img.shields.io/pypi/l/napari-mahotas-image-processing.svg?color=green)](https://github.com/haesleinhuepf/napari-mahotas-image-processing/raw/main/LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/napari-mahotas-image-processing.svg?color=green)](https://pypi.org/project/napari-mahotas-image-processing)
@@ -7,23 +7,62 @@
 [![codecov](https://codecov.io/gh/haesleinhuepf/napari-mahotas-image-processing/branch/main/graph/badge.svg)](https://codecov.io/gh/haesleinhuepf/napari-mahotas-image-processing)
 [![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-mahotas-image-processing)](https://napari-hub.org/plugins/napari-mahotas-image-processing)
 
-Image processing based using the Mahotas library in napari
+Image processing based using the [Mahotas library](https://github.com/luispedro/mahotas) in [napari](https://napari.org)
+
+## Usage
+
+
+
+### Gaussian blur
+
+Applies a [Gaussian blur](https://mahotas.readthedocs.io/en/latest/api.html#mahotas.gaussian_filter) to an
+image. This might be useful for denoising, e.g. before applying the Threshold-Otsu method.
+
+![img.png](docs/gaussian_blur.png)
+
+### Otsu's threshold
+
+Binarizes an image using [scikit-image's threshold Otsu algorithm](https://mahotas.readthedocs.io/en/latest/api.html#mahotas.otsu), also known as 
+[Otsu's method](https://ieeexplore.ieee.org/document/4310076).
+
+![img.png](docs/threshold_otsu.png)
+
+### Split connected objects
+
+In case objects stick together after thresholding, this tool might help.
+It aims to deliver similar results as [ImageJ's watershed implementation](https://imagej.nih.gov/ij/docs/menus/process.html#watershed).
+
+![img.png](docs/split_touching_objects.png)
+
+### Connected component labeling
+
+Takes a binary image and produces a label image with all separated objects labeled differently. Under the hood, it uses
+[mahotas' label function](https://mahotas.readthedocs.io/en/latest/api.html#mahotas.label).
+
+![img.png](docs/connected_component_labeling.png)
+
+### Seeded watershed
+
+Starting from an image showing high-intensity membranes and a seed-image where objects have been labeled,
+objects are labeled that are constrained by the membranes. Hint: you may want to blur the membrane channel a bit in advance.
+
+![img.png](docs/seeded_watershed.png)
+
 
 ----------------------------------
 
 This [napari] plugin was generated with [Cookiecutter] using [@napari]'s [cookiecutter-napari-plugin] template.
 
-<!--
-Don't miss the full getting started guide to set up your new package:
-https://github.com/napari/cookiecutter-napari-plugin#getting-started
-
-and review the napari docs for plugin developers:
-https://napari.org/docs/plugins/index.html
--->
-
 ## Installation
 
-You can install `napari-mahotas-image-processing` via [pip]:
+Before installing this napari plugin, please [install `mahotas`](https://github.com/luispedro/mahotas#install), e.g. using conda:
+
+```
+conda config --add channels conda-forge
+conda install mahotas
+```
+
+Afterwards, you can install `napari-mahotas-image-processing` via [pip]:
 
     pip install napari-mahotas-image-processing
 
