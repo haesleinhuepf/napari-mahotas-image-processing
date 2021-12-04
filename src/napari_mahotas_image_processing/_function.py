@@ -22,7 +22,7 @@ def napari_experimental_provide_function():
     ]
 
 
-@register_function(menu="Filtering > Gaussian (n-mahotas)")
+@register_function(menu="Filtering / noise removal > Gaussian (n-mahotas)")
 @time_slicer
 def gaussian_blur(image:ImageData, sigma: float = 1, viewer: napari.Viewer = None) -> ImageData:
     """
@@ -39,7 +39,7 @@ def _8bit(image):
     return (image / image.max() * 255).astype(np.uint8)
 
 
-@register_function(menu="Segmentation > Threshold (Otsu et al 1979, n-mahotas)")
+@register_function(menu="Segmentation / binarization > Threshold (Otsu et al 1979, n-mahotas)")
 @time_slicer
 def threshold_otsu(image:ImageData, viewer: napari.Viewer = None) -> LabelsData:
     """
@@ -53,7 +53,7 @@ def threshold_otsu(image:ImageData, viewer: napari.Viewer = None) -> LabelsData:
     t = mh.otsu(image_8bit)
     return image_8bit > t
 
-@register_function(menu="Segmentation > Connected component labeling (n-mahotas)")
+@register_function(menu="Segmentation / labeling > Connected component labeling (n-mahotas)")
 @time_slicer
 def connected_component_labeling(binary_image: LabelsData, viewer: napari.Viewer = None) -> LabelsData:
     """
@@ -66,7 +66,7 @@ def connected_component_labeling(binary_image: LabelsData, viewer: napari.Viewer
     labeled, nr_objects = mh.label(binary_image)
     return labeled
 
-@register_function(menu="Filtering > Sobel edge detection (2D only, n-mahotas)")
+@register_function(menu="Filtering / edge enhancement > Sobel edge detection (2D only, n-mahotas)")
 @time_slicer
 def sobel_edge_detector(image:ImageData, viewer: napari.Viewer = None) -> ImageData:
     """
@@ -78,7 +78,7 @@ def sobel_edge_detector(image:ImageData, viewer: napari.Viewer = None) -> ImageD
     """
     return mh.sobel(image, just_filter=True)
 
-@register_function(menu="Segmentation > Binary fill holes (2D only, n-mahotas)")
+@register_function(menu="Segmentation post-processing > Binary fill holes (2D only, n-mahotas)")
 @time_slicer
 def binary_fill_holes(binary_image:LabelsData, viewer: napari.Viewer = None) -> LabelsData:
     """
@@ -91,7 +91,7 @@ def binary_fill_holes(binary_image:LabelsData, viewer: napari.Viewer = None) -> 
     return mh.close_holes(binary_image)
 
 
-@register_function(menu="Segmentation > Seeded watershed (n-mahotas)")
+@register_function(menu="Segmentation / labeling > Seeded watershed (n-mahotas)")
 @time_slicer
 def seeded_watershed(image:ImageData, labeled_seeds:LabelsData, viewer: napari.Viewer = None) -> LabelsData:
     """
@@ -105,7 +105,7 @@ def seeded_watershed(image:ImageData, labeled_seeds:LabelsData, viewer: napari.V
 
     return labels
 
-@register_function(menu="Segmentation > Euclidean distance map (n-mahotas)")
+@register_function(menu="Measurement > Euclidean distance map (n-mahotas)")
 @time_slicer
 def euclidean_distance_map(binary_image:LabelsData, viewer: napari.Viewer = None) -> LabelsData:
     """
@@ -139,7 +139,7 @@ def _sobel_3d(image):
     return ndi.convolve(image, kernel)
 
 
-@register_function(menu="Segmentation > Split touching objects (n-mahotas)")
+@register_function(menu="Segmentation post-processing > Split touching objects (n-mahotas)")
 @time_slicer
 def split_touching_objects(binary:LabelsData, sigma:float=3.5, viewer: napari.Viewer = None) -> LabelsData:
     """
