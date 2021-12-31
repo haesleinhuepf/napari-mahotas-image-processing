@@ -1,8 +1,7 @@
 import numpy as np
 from napari_plugin_engine import napari_hook_implementation
-import mahotas as mh
 from napari_tools_menu import register_function
-from napari_time_slicer import time_slicer
+from napari_time_slicer import time_slicer, slice_by_slice
 import napari
 from napari.types import ImageData, LabelsData
 
@@ -32,6 +31,7 @@ def gaussian_blur(image:ImageData, sigma: float = 1, viewer: napari.Viewer = Non
     --------
     ..[0] https://mahotas.readthedocs.io/en/latest/api.html#mahotas.gaussian_filter
     """
+    import mahotas as mh
     return mh.gaussian_filter(image, sigma)
 
 
@@ -49,6 +49,7 @@ def threshold_otsu(image:ImageData, viewer: napari.Viewer = None) -> LabelsData:
     --------
     ..[0] https://mahotas.readthedocs.io/en/latest/api.html#mahotas.otsu
     """
+    import mahotas as mh
     image_8bit = _8bit(image)
     t = mh.otsu(image_8bit)
     return image_8bit > t
@@ -66,7 +67,7 @@ def connected_component_labeling(binary_image: LabelsData, viewer: napari.Viewer
     labeled, nr_objects = mh.label(binary_image)
     return labeled
 
-@register_function(menu="Filtering / edge enhancement > Sobel edge detection (2D only, n-mahotas)")
+@register_function(menu="Filtering / edge enhancement > Sobel edge detection (slice-by-slice, n-mahotas)")
 @time_slicer
 def sobel_edge_detector(image:ImageData, viewer: napari.Viewer = None) -> ImageData:
     """
@@ -76,9 +77,11 @@ def sobel_edge_detector(image:ImageData, viewer: napari.Viewer = None) -> ImageD
     --------
     ..[0] https://mahotas.readthedocs.io/en/latest/api.html#mahotas.sobel
     """
+    import mahotas as mh
     return mh.sobel(image, just_filter=True)
 
-@register_function(menu="Segmentation post-processing > Binary fill holes (2D only, n-mahotas)")
+@register_function(menu="Segmentation post-processing > Binary fill holes (slice_by_slice, n-mahotas)")
+@slice_by_slice
 @time_slicer
 def binary_fill_holes(binary_image:LabelsData, viewer: napari.Viewer = None) -> LabelsData:
     """
@@ -88,6 +91,7 @@ def binary_fill_holes(binary_image:LabelsData, viewer: napari.Viewer = None) -> 
     --------
     ..[0] https://mahotas.readthedocs.io/en/latest/api.html#mahotas.close_holes
     """
+    import mahotas as mh
     return mh.close_holes(binary_image)
 
 
@@ -101,8 +105,8 @@ def seeded_watershed(image:ImageData, labeled_seeds:LabelsData, viewer: napari.V
     --------
     ..[0] https://mahotas.readthedocs.io/en/latest/api.html#mahotas.cwatershed
     """
+    import mahotas as mh
     labels = mh.cwatershed(image, labeled_seeds)
-
     return labels
 
 @register_function(menu="Measurement > Euclidean distance map (n-mahotas)")
@@ -116,6 +120,7 @@ def euclidean_distance_map(binary_image:LabelsData, viewer: napari.Viewer = None
     --------
     ..[0] https://en.wikipedia.org/wiki/Distance_transform
     """
+    import mahotas as mh
     return mh.distance(binary_image)
 
 def _sobel_3d(image):
@@ -149,6 +154,8 @@ def split_touching_objects(binary:LabelsData, sigma:float=3.5, viewer: napari.Vi
     --------
     .. [0] https://imagej.nih.gov/ij/docs/menus/process.html#watershed
     """
+    import mahotas as mh
+
     binary = _8bit(np.asarray(binary))
 
     # typical way of using scikit-image watershed
