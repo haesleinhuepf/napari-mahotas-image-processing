@@ -1,3 +1,22 @@
+
+# Note: This is a decommissioned napari plugin 
+
+This project is discontinued. You can still install and use it (version 0.1.2 was last tested with napari 0.4.12) but this project is 
+no longer maintained and supported.
+
+```python
+conda install pyopencl
+pip install napari-mahotas-image-processing==0.1.2
+```
+
+Check out these napari plugins which have similar functionality:
+
+* [napari-zelda](https://github.com/RoccoDAnt/napari-zelda)
+* [napari-allencell-segmenter](https://github.com/AllenCell/napari-allencell-segmenter)
+* [napari-simpleitk-image-processing](https://github.com/haesleinhuepf/napari-simpleitk-image-processing)
+* [napari-segment-blobs-and-things-with-membranes](https://github.com/haesleinhuepf/napari-segment-blobs-and-things-with-membranes)
+* [napari_pyclesperanto_assistant](https://github.com/clesperanto/napari_pyclesperanto_assistant)
+
 # napari-mahotas-image-processing (n-mahotas)
 
 [![License](https://img.shields.io/pypi/l/napari-mahotas-image-processing.svg?color=green)](https://github.com/haesleinhuepf/napari-mahotas-image-processing/raw/main/LICENSE)
